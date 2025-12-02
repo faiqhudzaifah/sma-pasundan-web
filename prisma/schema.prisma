@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")   // Untuk Aplikasi (Pooler)
+  directUrl = env("DIRECT_URL")     // Untuk Migrasi (Direct)
+}
+
+// Untuk Berita & Kegiatan
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  slug      String   @unique
+  content   String   @db.Text
+  category  String   // "Berita" atau "Kegiatan"
+  image     String?
+  createdAt DateTime @default(now())
+}
+
+// Untuk Data Guru/Tenaga Pendidik
+model Teacher {
+  id        Int     @id @default(autoincrement())
+  name      String
+  subject   String  // Mata Pelajaran
+  position  String? // Jabatan (Kepsek, Wakasek)
+  image     String?
+}
+
+// Untuk Prestasi (Sekolah, Guru, Siswa)
+model Achievement {
+  id          Int     @id @default(autoincrement())
+  title       String
+  category    String  // "Akademik", "Non-Akademik"
+  level       String  // "Kabupaten", "Provinsi", "Nasional"
+  recipient   String  // Nama Siswa/Guru
+  year        Int
+  description String?
+}
+
+// Untuk Ekstrakurikuler
+model Extracurricular {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  image       String?
+}
+
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String   // Nanti passwordnya di-hash (dienkripsi)
+  name      String?
+  createdAt DateTime @default(now())
+}
