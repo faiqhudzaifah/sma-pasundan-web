@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { updateAchievement } from '../../../actions'
+import { updateAchievement } from '../../actions'
 import { notFound } from 'next/navigation'
 import { Save, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
