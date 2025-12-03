@@ -1,13 +1,13 @@
+// EditPrestasiForm.tsx
 'use client'
 
-import { updateAchievement } from '../../actions'
+import { updateAchievement } from '../../actions' // Path ke actions.ts sudah benar (2 titik)
 import { Save, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { Achievement } from '@prisma/client' // Import type dari Prisma
+import { Achievement } from '@prisma/client' // Pastikan ini terimport
 
 interface EditFormProps {
-  // Menerima data prestasi dari Server Component
   achievement: Achievement
 }
 
@@ -24,12 +24,9 @@ export default function EditPrestasiForm({ achievement }: EditFormProps) {
       await updateAchievement(achievement.id, formData)
       toast.success('Prestasi berhasil diperbarui!')
     } catch (error: any) {
-      // Server Action akan me-redirect jika sukses, jadi catch ini hanya untuk error fatal DB.
       toast.error('Gagal memperbarui data. Cek koneksi atau log server.')
-    } finally {
-      // Karena updateAchievement me-redirect, loading state akan reset.
-      // setIsSubmitting(false) 
-    }
+      setIsSubmitting(false)
+    } 
   }
 
   return (
