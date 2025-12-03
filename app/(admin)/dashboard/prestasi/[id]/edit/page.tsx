@@ -2,9 +2,9 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, User } from 'lucide-react' 
 import Link from 'next/link'
-import EditPrestasiForm from './EditPrestasiForm' 
+import EditPrestasiForm from './EditPrestasiForm' // Import Client Component yang sudah dibuat
 
-
+// HAPUS SEMUA IMPORT CLIENT DARI FILE INI
 
 export default async function EditPrestasiPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
