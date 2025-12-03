@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft, User } from 'lucide-react'
 import Link from 'next/link'
 // Import component client yang sudah dibuat
-import EditPrestasiForm from './EditPrestasiForm' 
+import EditPrestasiForm from './EditPrestasiForm'
 
 export default async function EditPrestasiPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
