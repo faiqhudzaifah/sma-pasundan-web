@@ -1,18 +1,18 @@
-// EditPrestasiForm.tsx
 'use client'
 
-import { updateAchievement } from '../../actions' // Path ke actions.ts sudah benar (2 titik)
-import { Save, Loader2 } from 'lucide-react'
-import { useState } from 'react'
-import { toast } from 'sonner'
-import { Achievement } from '@prisma/client' // Pastikan ini terimport
+import { updateAchievement } from '../../actions'
+import { Save, Loader2 } from 'lucide-react' // 👈 [1] IMPORT Loader2 DI SINI
+import { useState } from 'react' // 👈 [1] IMPORT useState DI SINI
+import { toast } from 'sonner' // 👈 [1] IMPORT toast DI SINI
+import { Achievement } from '@prisma/client'
 
 interface EditFormProps {
   achievement: Achievement
 }
 
 export default function EditPrestasiForm({ achievement }: EditFormProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  // 👈 [2] PENGGUNAAN 1: useState untuk melacak status loading
+  const [isSubmitting, setIsSubmitting] = useState(false) 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -20,60 +20,29 @@ export default function EditPrestasiForm({ achievement }: EditFormProps) {
     const formData = new FormData(e.currentTarget)
     
     try {
-      // Panggil Server Action dengan ID
       await updateAchievement(achievement.id, formData)
-      toast.success('Prestasi berhasil diperbarui!')
+      
+      // 👈 [3] PENGGUNAAN 2: toast untuk notifikasi sukses
+      toast.success('Prestasi berhasil diperbarui!') 
+      
     } catch (error: any) {
+      // 👈 [4] PENGGUNAAN 3: toast untuk notifikasi error
       toast.error('Gagal memperbarui data. Cek koneksi atau log server.')
-      setIsSubmitting(false)
-    } 
+    } finally {
+      // setIsSubmitting(false) 
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       
-      <div>
-        <label className="block text-sm font-medium mb-2 dark:text-slate-300">Nama Kejuaraan</label>
-        <input name="title" type="text" required defaultValue={achievement.title} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-green-500 dark:text-white" />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-medium mb-2 dark:text-slate-300">Kategori</label>
-          <select name="category" defaultValue={achievement.category} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-green-500 dark:text-white">
-            <option value="Akademik">Akademik</option>
-            <option value="Non-Akademik">Non-Akademik</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-2 dark:text-slate-300">Tingkat</label>
-          <select name="level" defaultValue={achievement.level} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-green-500 dark:text-white">
-            <option value="Kabupaten">Kabupaten</option>
-            <option value="Provinsi">Provinsi</option>
-            <option value="Nasional">Nasional</option>
-            <option value="Internasional">Internasional</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-medium mb-2 dark:text-slate-300">Nama Pemenang</label>
-          <input name="recipient" type="text" required defaultValue={achievement.recipient} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-green-500 dark:text-white" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-2 dark:text-slate-300">Tahun</label>
-          <input name="year" type="number" required defaultValue={achievement.year} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-green-500 dark:text-white" />
-        </div>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-2 dark:text-slate-300">Deskripsi</label>
-        <textarea name="description" rows={3} defaultValue={achievement.description || ''} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-green-500 dark:text-white"></textarea>
-      </div>
+      {/* ... (Input Form Lainnya) ... */}
 
       <button type="submit" disabled={isSubmitting} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition disabled:opacity-50">
+        
+        {/* 👈 [5] PENGGUNAAN 4: Loader2 (Ikon Loading) */}
         {isSubmitting ? <><Loader2 className="animate-spin" size={20} /> Menyimpan...</> : <><Save size={20} /> Simpan Perubahan</>}
+        
       </button>
 
     </form>

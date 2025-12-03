@@ -24,7 +24,6 @@ export default async function EditPrestasiPage({ params }: { params: Promise<{ i
         <ArrowLeft size={20} /> Batal & Kembali
       </Link>
 
-      {/* Card Utama */}
       <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
         
         {/* Header Form */}
@@ -35,7 +34,8 @@ export default async function EditPrestasiPage({ params }: { params: Promise<{ i
           <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Edit Data Prestasi</h1>
         </div>
         
-        {/* Panggil Client Form di sini, yang akan menangani semua state */}
+        {/* Panggil Client Form di sini */}
+        {/* Data 'achievement' dikirim sebagai props */}
         <EditPrestasiForm achievement={achievement} />
         
       </div>
